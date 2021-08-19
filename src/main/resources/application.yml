@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: spring-component
+
+  rabbitmq:
+    virtual-host: /
+    username: guest
+    password: guest
+    port: 5672
+
+
+
+
+#设置batch任务项目启动时不运行
+  batch:
+    job:
+      enabled: false
+
+  datasource:
+#    sqlite:
+#      driver-class-name: org.sqlite.JDBC
+#      jdbc-url: jdbc:sqlite::resource:static/sqlite/xy.db
+#      username:
+#      password:
+    jobmeta:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.51.200:3305/job_meta?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;connectTimeout=1000;useSSL=false
+      username: root
+      password: 123456
+
+    source:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.51.200:3305/source_data?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;connectTimeout=1000;useSSL=false
+      username: root
+      password: 123456
+
+    target:
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.51.200:3305/target_data?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;connectTimeout=1000;useSSL=false
+      username: root
+      password: 123456
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  pa
+
+
+
