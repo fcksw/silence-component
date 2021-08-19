@@ -1,0 +1,4 @@
+# silence-component
+
+rabbitMq
+springbatch
