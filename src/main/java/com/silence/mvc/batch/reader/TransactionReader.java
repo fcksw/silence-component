@@ -23,7 +23,7 @@ public class TransactionReader {
         return new MyBatisPagingItemReaderBuilder<Transaction>()
                 .sqlSessionFactory(readSqlSessionFactory)
                 .pageSize(1000)
-                .queryId("com.silence.mvc.batch.dao.TransactionDao.selectAll")
+                .queryId("com.silence.mvc.batch.dao.read.TransactionReadDao.selectAllTransaction")
 //                .parameterValues()
                 .build();
     }

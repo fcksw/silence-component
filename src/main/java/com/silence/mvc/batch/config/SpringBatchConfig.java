@@ -5,10 +5,13 @@ import com.silence.mvc.batch.config.datasource.SourceDataSourceConfig;
 import com.silence.mvc.batch.config.datasource.TargetDataSourceConfig;
 import com.silence.mvc.batch.entity.PayRecord;
 import com.silence.mvc.batch.entity.PayRecordRowMapper;
+import com.silence.mvc.batch.entity.Transaction;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
@@ -28,6 +31,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 @Configuration
@@ -254,10 +258,35 @@ public class SpringBatchConfig {
 
 
     /**
-     * 完成对账job
+     * job1 : 数据读取与写入
+     *
+     *      1、任务运行信息写入内存 sqlite数据库
+     *      2、任务数据来源使用 mybatisPageItemReader, 并独立配置 sourceDateSource
+     *      3、任务数据写入使用 mybatisItemWriter
      */
 
+    @Bean("transactionJob")
+    public Job transactionJob(@Qualifier("transactionStep")Step transactionStep) {
+        return this.jobBuilderFactory.get("transactionJob")
+                .start(transactionStep)
+                .build();
+    }
 
+
+
+    @Bean("transactionStep")
+    public Step transactionStep(@Qualifier("myBatisPagingItemReader")ItemReader<Transaction> myBatisPagingItemReader
+                        , @Qualifier("myBatisBatchItemWriter") ItemWriter<Transaction> myBatisBatchItemWriter
+                        , @Qualifier("transactionFunctionProcessor") ItemProcessor<Transaction, Transaction> transactionFunctionProcessor){
+
+        return this.stepBuilderFactory.get("transactionStep")
+                .<Transaction, Transaction>chunk(1000)
+                .reader(myBatisPagingItemReader)
+                .processor(transactionFunctionProcessor)
+                .writer(myBatisBatchItemWriter)
+                .throttleLimit(10).build();
+
+    }
 
 
 

@@ -9,11 +9,13 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = {"com.silence.mvc.batch.dao.read"})
+@MapperScan(basePackages = {"com.silence.mvc.batch.dao.read"}, sqlSessionFactoryRef = "readSqlSessionFactory")
 public class SourceDataSourceConfig {
 
 
@@ -30,6 +32,8 @@ public class SourceDataSourceConfig {
     public SqlSessionFactory readSqlSessionFactory(@Qualifier("sourceDatasource")DataSource sourceDataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(sourceDataSource);
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources("classpath:mapper/*Mapper.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 

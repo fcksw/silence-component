@@ -1,5 +1,7 @@
 package com.silence.mvc.controller;
 
+import com.silence.mvc.batch.dao.read.TransactionReadDao;
+import com.silence.mvc.batch.entity.Transaction;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/test")
@@ -43,6 +46,12 @@ public class TestController {
     @Resource
     private Job migratePayRecordJob;
 
+    @Resource
+    private Job transactionJob;
+
+    @Resource
+    private TransactionReadDao transactionReadDao;
+
 
     @RequestMapping("/batchJob")
     public String handle() throws Exception {
@@ -53,6 +62,23 @@ public class TestController {
 
         return "Batch job has been invoked";
     }
+
+    @RequestMapping("/transactionJob")
+    public String transactionJob() throws Exception {
+
+        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+                .toJobParameters();
+        jobLauncher.run(transactionJob, jobParameters);
+
+        return "Batch job has been invoked";
+    }
+
+
+    @RequestMapping("/read")
+    public List<Transaction> read() {
+        return transactionReadDao.selectAllTransaction();
+    }
+
 
 
 }

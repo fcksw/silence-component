@@ -16,7 +16,7 @@ public class TransactionWriter {
     private SqlSessionFactory writeSqlSessionFactory;
 
 
-    @Bean
+    @Bean("myBatisBatchItemWriter")
     public MyBatisBatchItemWriter<Transaction> myBatisBatchItemWriter() {
         return new MyBatisBatchItemWriterBuilder<Transaction>()
                 .sqlSessionFactory(writeSqlSessionFactory)

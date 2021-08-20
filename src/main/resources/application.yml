@@ -40,8 +40,13 @@ spring:
 
 
 
-mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
+#  因为多数据源是通过@contigration注解的Java类编程配置的，所以这种方式并不能读取到mapper的xml文件在哪。
+
+#  解决方法是分别在mybatis配置类中生成SqlSessionFactory的方法中配置mapper路径：
+#
+#mybatis:
+#  mapper-locations: classpath:mapper/*Mapper.xml
+#  type-aliases-package: com.silence.batch.entity
 
 #
 #
