@@ -19,8 +19,7 @@ import javax.sql.DataSource;
 import java.net.MalformedURLException;
 
 
-@Configuration
-public class DataSourceConfig {
+//public class DataSourceConfig {
 
 
 //    @Bean("jobmetaDatasource")
@@ -30,37 +29,6 @@ public class DataSourceConfig {
 //        return DataSourceBuilder.create().build();
 //    }
 
-    @Bean("sourceDatasource")
-    @ConfigurationProperties(prefix = "spring.datasource.source")
-    public DataSource sourceDatasource() {
-        return DataSourceBuilder.create().build();
-    }
-
-
-    @Bean("readSqlSessionFactory")
-    @Primary
-    public SqlSessionFactory readSqlSessionFactory(@Qualifier("sourceDatasource")DataSource sourceDataSource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(sourceDataSource);
-        return sqlSessionFactoryBean.getObject();
-    }
-
-
-
-
-    @Bean("targetDatasource")
-    @ConfigurationProperties(prefix = "spring.datasource.target")
-    public DataSource targetDatasource() {
-        return DataSourceBuilder.create().build();
-    }
-
-
-    @Bean("writeSqlSessionFactory")
-    public SqlSessionFactory writeSqlSessionFactory(@Qualifier("targetDatasource")DataSource targetDatasource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(targetDatasource);
-        return sqlSessionFactoryBean.getObject();
-    }
 
 /**
  * 使用sqlite作为数据源
@@ -72,44 +40,7 @@ public class DataSourceConfig {
 //    private Resource dataReopsitorySchema;
 
 
-    @Bean("sqliteDataSource")
-    @Primary
-    public DataSource sqliteDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite:repository.sqlite");
-        return dataSource;
-    }
 
-
-    /**
-     * 初始化sqlite数据库
-     *
-     * @param sqliteDataSource
-     * @return
-     * @throws MalformedURLException
-     */
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource sqliteDataSource)
-            throws MalformedURLException {
-        ResourceDatabasePopulator databasePopulator =
-                new ResourceDatabasePopulator();
-
-        Resource dropReopsitoryTables = new ClassPathResource("org/springframework/batch/core/schema-drop-sqlite.sql");
-
-        Resource dataReopsitorySchema = new ClassPathResource("org/springframework/batch/core/schema-sqlite.sql");
-
-        databasePopulator.addScript(dropReopsitoryTables);
-        databasePopulator.addScript(dataReopsitorySchema);
-        databasePopulator.setIgnoreFailedDrops(true);
-        databasePopulator.setContinueOnError(true);
-
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(sqliteDataSource);
-        initializer.setDatabasePopulator(databasePopulator);
-
-        return initializer;
-    }
 //
 //    private ResourcelessTransactionManager transactionManager() {
 //        return new ResourcelessTransactionManager();
@@ -131,4 +62,4 @@ public class DataSourceConfig {
 
 
 
-}
+//}

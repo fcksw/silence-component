@@ -28,7 +28,7 @@ import java.util.List;
 
 
 @Configuration
-@ComponentScan(basePackageClasses = {DataSourceConfig.class})
+@ComponentScan(basePackageClasses = {SourceDataSourceConfig.class, TargetDataSourceConfig.class, BatchMetaDataSourceConfig.class})
 public class SpringBatchConfig {
 
     @Resource

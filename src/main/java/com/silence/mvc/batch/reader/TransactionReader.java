@@ -4,18 +4,13 @@ import com.silence.mvc.batch.entity.Transaction;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.mybatis.spring.batch.builder.MyBatisPagingItemReaderBuilder;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
-public class TransactionReader implements ItemReader<Transaction> {
+public class TransactionReader {
 
 
     @Resource(name = "readSqlSessionFactory")
@@ -23,14 +18,13 @@ public class TransactionReader implements ItemReader<Transaction> {
 
 
 
-    @Override
-    public Transaction read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-
-        Map<String, Object> params = new HashMap<>();
-
-        MyBatisPagingItemReader myBatisPagingItemReader = new MyBatisPagingItemReader();
-        myBatisPagingItemReader.setSqlSessionFactory(readSqlSessionFactory);
-
-        return null;
+    @Bean("myBatisPagingItemReader")
+    public MyBatisPagingItemReader<Transaction> myBatisPagingItemReader() {
+        return new MyBatisPagingItemReaderBuilder<Transaction>()
+                .sqlSessionFactory(readSqlSessionFactory)
+                .pageSize(1000)
+                .queryId("com.silence.mvc.batch.dao.TransactionDao.selectAll")
+//                .parameterValues()
+                .build();
     }
 }
