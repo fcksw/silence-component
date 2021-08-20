@@ -1,5 +1,8 @@
 package com.silence.mvc.batch.config;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -33,12 +36,31 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
+
+    @Bean("readSqlSessionFactory")
+    @Primary
+    public SqlSessionFactory readSqlSessionFactory(@Qualifier("sourceDatasource")DataSource sourceDataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(sourceDataSource);
+        return sqlSessionFactoryBean.getObject();
+    }
+
+
+
+
     @Bean("targetDatasource")
     @ConfigurationProperties(prefix = "spring.datasource.target")
     public DataSource targetDatasource() {
         return DataSourceBuilder.create().build();
     }
 
+
+    @Bean("writeSqlSessionFactory")
+    public SqlSessionFactory writeSqlSessionFactory(@Qualifier("targetDatasource")DataSource targetDatasource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(targetDatasource);
+        return sqlSessionFactoryBean.getObject();
+    }
 
 /**
  * 使用sqlite作为数据源

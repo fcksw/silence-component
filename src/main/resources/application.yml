@@ -9,8 +9,6 @@ spring:
     port: 5672
 
 
-
-
 #设置batch任务项目启动时不运行
   batch:
     job:
@@ -44,7 +42,11 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  pa
 
-
-
+#
+#
+#pagehelper:
+#  dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql
