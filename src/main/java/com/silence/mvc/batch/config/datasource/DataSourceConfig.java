@@ -1,4 +1,4 @@
-package com.silence.mvc.batch.config;
+package com.silence.mvc.batch.config.datasource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

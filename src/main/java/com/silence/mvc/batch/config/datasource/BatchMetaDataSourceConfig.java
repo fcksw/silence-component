@@ -1,4 +1,4 @@
-package com.silence.mvc.batch.config;
+package com.silence.mvc.batch.config.datasource;
 
 
 import org.springframework.context.annotation.Bean;

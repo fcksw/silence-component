@@ -1,5 +1,8 @@
 package com.silence.mvc.batch.config;
 
+import com.silence.mvc.batch.config.datasource.BatchMetaDataSourceConfig;
+import com.silence.mvc.batch.config.datasource.SourceDataSourceConfig;
+import com.silence.mvc.batch.config.datasource.TargetDataSourceConfig;
 import com.silence.mvc.batch.entity.PayRecord;
 import com.silence.mvc.batch.entity.PayRecordRowMapper;
 import org.springframework.batch.core.Job;

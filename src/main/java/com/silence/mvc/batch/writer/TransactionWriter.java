@@ -20,7 +20,7 @@ public class TransactionWriter {
     public MyBatisBatchItemWriter<Transaction> myBatisBatchItemWriter() {
         return new MyBatisBatchItemWriterBuilder<Transaction>()
                 .sqlSessionFactory(writeSqlSessionFactory)
-                .statementId("com.silence.mvc.batch.dao.TransactionWriteDao.insert")
+                .statementId("com.silence.mvc.batch.dao.write.TransactionWriteDao.insert")
                 .build();
     }
 

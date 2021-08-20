@@ -1,4 +1,4 @@
-package com.silence.mvc.batch.dao;
+package com.silence.mvc.batch.dao.write;
 
 import org.apache.ibatis.annotations.Mapper;
 

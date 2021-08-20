@@ -1,4 +1,4 @@
-package com.silence.mvc.batch.dao;
+package com.silence.mvc.batch.dao.read;
 
 import com.silence.mvc.batch.entity.Transaction;
 import org.apache.ibatis.annotations.Mapper;
