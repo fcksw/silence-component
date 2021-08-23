@@ -3,6 +3,8 @@ package com.silence.mvc.controller;
 import com.silence.mvc.batch.dao.read.TransactionReadDao;
 import com.silence.mvc.batch.dao.write.TransactionWriteDao;
 import com.silence.mvc.batch.entity.Transaction;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
@@ -88,5 +92,27 @@ public class TestController {
     public List<Transaction> write() {
         return transactionWriteDao.selectAll();
     }
+
+
+    @Resource
+    private SqlSessionFactory sqlSessionFactory;
+
+    @RequestMapping("/page")
+    public List<Transaction> page() {
+        SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+
+        Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("_page", 0L);
+        parameters.put("_pagesize", 10L);
+        parameters.put("_skiprows", 0L);
+
+        parameters.put("status", "confirm_failed");
+
+        List<Transaction> result = sqlSessionTemplate.selectList("com.silence.mvc.batch.dao.read.TransactionReadDao.selectAllTransactionByStatus", parameters);
+
+        return result;
+
+    }
+
 
 }

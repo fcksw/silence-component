@@ -10,4 +10,6 @@ public interface TransactionReadDao {
 
     List<Transaction> selectAllTransaction();
 
+    List<Transaction> selectAllTransactionByStatus(Transaction transaction);
+
 }

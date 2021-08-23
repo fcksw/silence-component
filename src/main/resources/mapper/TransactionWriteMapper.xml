@@ -5,7 +5,7 @@
 
 
     <select id="selectAllTransaction" resultType="com.silence.mvc.batch.entity.Transaction">
-            select * from transaction limit 10;
+            select * from transaction;
     </select>
 
     <insert id="insertTransaction" parameterType="com.silence.mvc.batch.entity.Transaction">
