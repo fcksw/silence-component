@@ -10,6 +10,5 @@ public interface TransactionWriteDao {
 
     boolean insert();
 
-
     List<Transaction> selectAll();
 }

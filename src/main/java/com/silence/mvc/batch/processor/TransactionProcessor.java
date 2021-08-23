@@ -6,7 +6,6 @@ import org.springframework.batch.item.function.FunctionItemProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
 
 @Component
 public class TransactionProcessor {
@@ -15,6 +14,7 @@ public class TransactionProcessor {
     @Bean("transactionFunctionProcessor")
     public FunctionItemProcessor<Transaction, Transaction> transactionFunctionProcessor() {
         return new FunctionItemProcessor<>(transaction -> {
+            System.out.println(transaction.getTransactionId());
             transaction.setStateMsg("batch job");
             return transaction;
         });

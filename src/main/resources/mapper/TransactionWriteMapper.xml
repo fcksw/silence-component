@@ -8,4 +8,9 @@
             select * from transaction limit 10;
     </select>
 
+    <insert id="insertTransaction" parameterType="com.silence.mvc.batch.entity.Transaction">
+        insert into transaction(uid, transaction_id, fd_code, fd_name, state_msg)
+            values (#{uid}, #{transactionId}, #{fdCode}, #{fdName}, #{stateMsg})
+    </insert>
+
 </mapper>
