@@ -4,6 +4,8 @@
 <mapper namespace="com.silence.mvc.batch.dao.write.TransactionWriteDao">
 
 
-
+    <select id="selectAllTransaction" resultType="com.silence.mvc.batch.entity.Transaction">
+            select * from transaction limit 10;
+    </select>
 
 </mapper>

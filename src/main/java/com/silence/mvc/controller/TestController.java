@@ -1,6 +1,7 @@
 package com.silence.mvc.controller;
 
 import com.silence.mvc.batch.dao.read.TransactionReadDao;
+import com.silence.mvc.batch.dao.write.TransactionWriteDao;
 import com.silence.mvc.batch.entity.Transaction;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.batch.core.Job;
@@ -52,6 +53,9 @@ public class TestController {
     @Resource
     private TransactionReadDao transactionReadDao;
 
+    @Resource
+    private TransactionWriteDao transactionWriteDao;
+
 
     @RequestMapping("/batchJob")
     public String handle() throws Exception {
@@ -80,5 +84,9 @@ public class TestController {
     }
 
 
+    @RequestMapping("/write")
+    public List<Transaction> write() {
+        return transactionWriteDao.selectAll();
+    }
 
 }
