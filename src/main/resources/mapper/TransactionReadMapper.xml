@@ -10,6 +10,6 @@
 
 
          <select id="selectAllTransaction" resultType="com.silence.mvc.batch.entity.Transaction">
-            select * from transaction limit #{_skiprows}, #{_pagesize};
+            select * from transaction where status = #{status} limit #{_skiprows}, #{_pagesize};
          </select>
 </mapper>

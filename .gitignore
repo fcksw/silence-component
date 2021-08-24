@@ -34,4 +34,4 @@ build/
 
 
 ### DB ###
-repository.sqlite
+/repository.sqlite

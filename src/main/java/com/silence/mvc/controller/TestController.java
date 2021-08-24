@@ -74,23 +74,13 @@ public class TestController {
     @RequestMapping("/transactionJob")
     public String transactionJob() throws Exception {
 
-        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .addString("status", "confirm_failed")
                 .toJobParameters();
         jobLauncher.run(transactionJob, jobParameters);
 
         return "Batch job has been invoked";
-    }
-
-
-    @RequestMapping("/read")
-    public List<Transaction> read() {
-        return transactionReadDao.selectAllTransaction();
-    }
-
-
-    @RequestMapping("/write")
-    public List<Transaction> write() {
-        return transactionWriteDao.selectAll();
     }
 
 
