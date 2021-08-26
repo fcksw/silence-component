@@ -290,6 +290,28 @@ public class SpringBatchConfig {
 
 
 
+    @Bean("customTransactionStep")
+    public Step customTransactionStep(@Qualifier("customTransactionReader")ItemReader<Transaction> customTransactionReader
+            , @Qualifier("myBatisBatchItemWriter") ItemWriter<Transaction> myBatisBatchItemWriter
+            , @Qualifier("transactionFunctionProcessor") ItemProcessor<Transaction, Transaction> transactionFunctionProcessor){
+
+        return this.stepBuilderFactory.get("transactionStep")
+                .<Transaction, Transaction>chunk(1000)
+                .reader(customTransactionReader)
+                .processor(transactionFunctionProcessor)
+                .writer(myBatisBatchItemWriter)
+                .throttleLimit(10).build();
+
+    }
+
+
+
+    @Bean("customTransactionJob")
+    public Job customTransactionJob(@Qualifier("customTransactionStep")Step customTransactionStep) {
+        return this.jobBuilderFactory.get("customTransactionJob")
+                .start(customTransactionStep)
+                .build();
+    }
 
 
 

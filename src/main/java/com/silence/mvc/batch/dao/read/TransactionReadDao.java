@@ -12,4 +12,5 @@ public interface TransactionReadDao {
 
     List<Transaction> selectAllTransactionByStatus(Transaction transaction);
 
+    List<Transaction> selectTransactionLimit10();
 }

@@ -55,6 +55,9 @@ public class TestController {
     private Job transactionJob;
 
     @Resource
+    private Job customTransactionJob;
+
+    @Resource
     private TransactionReadDao transactionReadDao;
 
     @Resource
@@ -102,6 +105,18 @@ public class TestController {
 
         return result;
 
+    }
+
+    @RequestMapping("/customTransactionJob")
+    public String customTransactionJob() throws Exception {
+
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .addString("status", "confirm_failed")
+                .toJobParameters();
+        jobLauncher.run(customTransactionJob, jobParameters);
+
+        return "Batch job has been invoked";
     }
 
 
