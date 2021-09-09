@@ -1,5 +1,7 @@
 package com.silence.mvc.controller;
 
+import com.silence.mvc.batch.EventService;
+import com.silence.mvc.batch.SilenceServiceLoader;
 import com.silence.mvc.batch.dao.read.TransactionReadDao;
 import com.silence.mvc.batch.dao.write.TransactionWriteDao;
 import com.silence.mvc.batch.entity.Transaction;
@@ -119,5 +121,10 @@ public class TestController {
         return "Batch job has been invoked";
     }
 
+
+    @GetMapping("/load")
+    public void load() {
+        SilenceServiceLoader.load(EventService.class);
+    }
 
 }

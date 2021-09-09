@@ -4,8 +4,8 @@ import com.silence.mvc.batch.entity.Transaction;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.mybatis.spring.batch.builder.MyBatisPagingItemReaderBuilder;
-import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -39,5 +39,7 @@ public class TransactionReader {
                 .queryId("com.silence.mvc.batch.dao.read.TransactionReadDao.selectAllTransaction")
                 .parameterValues(map)
                 .build();
+
     }
+
 }
