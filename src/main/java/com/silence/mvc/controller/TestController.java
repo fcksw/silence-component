@@ -124,6 +124,8 @@ public class TestController {
 
     @GetMapping("/load")
     public void load() {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
         SilenceServiceLoader.load(EventService.class);
     }
 
